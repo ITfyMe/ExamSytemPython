@@ -24,7 +24,6 @@ class City(BaseController):
         city_json = json.loads(request.POST.get("city_json"))
 
         city_object: CityModel = CityModel()
-        city_object.cityid = city_json.get("cityid")
         city_object.stateid = city_json.get("stateid")
         city_object.name = city_json.get("name")
         city_object.code = city_json.get("code")
@@ -53,9 +52,6 @@ class City(BaseController):
 
         city_object: CityModel = CityModel()
         city_object.cityid = city_json.get("cityid")
-        city_object.stateid = city_json.get("stateid")
-        city_object.name = city_json.get("name")
-        city_object.code = city_json.get("code")
 
         city_service: CityService = CityService()
         city_object = city_service.delete(city_object)
@@ -95,7 +91,13 @@ class City(BaseController):
         return self.send_response(data)
 
     def get_list_object_page(self, request: HttpRequest):
-        params = []
+        params = [
+            {"state_id": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"city_name": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
+            {"code": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
+            {"page_num": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=1)},
+            {"page_size": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=10)},
+        ]
         params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
         city_service: CityService = CityService()
         data = city_service.get_list_object_paginated(params)
