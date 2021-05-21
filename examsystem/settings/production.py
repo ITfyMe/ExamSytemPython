@@ -51,6 +51,8 @@ WKHTMLTOPDF_PATH = os.path.join('usr', 'bin', 'wkhtmltopdf')
 POE_PDF_SERVER_BASE_URL = "https://poe-prod.sustainablecontext.com/"
 POE_PDF_SERVER_GET_POE_URL = POE_PDF_SERVER_BASE_URL + "api/main/poe/get-outward-poe"
 
+# Check Deployment
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
