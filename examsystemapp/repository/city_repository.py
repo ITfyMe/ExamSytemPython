@@ -19,12 +19,12 @@ class CityRepo(BaseRepository):
 
     def pre_add(self, object: CityModel):
         self.sp_name = "sCityAdd"
-        list_params = [object.cityid,object.stateid,object.name,object.code]
+        list_params = [object.stateid,object.name,object.code]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
         city_model: CityModel = object
-        city_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        city_model.cityid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return city_model
 
@@ -35,18 +35,15 @@ class CityRepo(BaseRepository):
 
     def post_update(self, object, returned_dict):
         city_model: CityModel = object
-        city_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
-
         return city_model
 
     def pre_delete(self, object: CityModel):
         self.sp_name = "sCityDelete"
-        list_params = [object.cityid,object.stateid,object.name,object.code]
+        list_params = [object.cityid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
         city_model: CityModel = object
-        city_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return city_model
 
@@ -102,7 +99,7 @@ class CityRepo(BaseRepository):
         return self.post_get_list(cursor_object)
 
     def pre_get_data_list_object_paginated(self, params):
-        self.sp_name = "sCityObjectGetListPage"
+        self.sp_name = "sCityGetListPage"
         self.params_list = params.get_params_list()
 
     def post_get_data_list_object_paginated(self, list_cursor_object):
