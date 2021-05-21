@@ -24,7 +24,7 @@ class Branch(BaseController):
         branch_json = json.loads(request.POST.get("branch_json"))
 
         branch_object: BranchModel = BranchModel()
-        branch_object.branchid = branch_json.get("branchid")
+        #branch_object.branchid = branch_json.get("branchid")
         branch_object.name = branch_json.get("name")
         branch_object.code = branch_json.get("code")
 
@@ -51,8 +51,8 @@ class Branch(BaseController):
 
         branch_object: BranchModel = BranchModel()
         branch_object.branchid = branch_json.get("branchid")
-        branch_object.name = branch_json.get("name")
-        branch_object.code = branch_json.get("code")
+       # branch_object.name = branch_json.get("name")
+        #branch_object.code = branch_json.get("code")
 
         branch_service: BranchService = BranchService()
         branch_object = branch_service.delete(branch_object)
@@ -92,7 +92,12 @@ class Branch(BaseController):
         return self.send_response(data)
 
     def get_list_object_page(self, request: HttpRequest):
-        params = []
+        params = [
+            {"BranchName": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default='')},
+             {"Code": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default='')},
+              {"pageNum": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=0)},
+               {"pageSize": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=10)}
+        ]
         params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
         branch_service: BranchService = BranchService()
         data = branch_service.get_list_object_paginated(params)
