@@ -54,4 +54,13 @@ MASTER_BASE_URL = "http://masters-test.sustainablecontext.com"
 WKHTMLTOPDF_PATH = os.path.join('usr', 'bin', 'wkhtmltopdf')
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'examsystem',
+        'USER': 'itfyme',
+        'PASSWORD': 'itfyme',
+        'HOST': '13.71.16.66',
+        'PORT': '3306',
+    }
 }
