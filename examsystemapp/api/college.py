@@ -115,15 +115,13 @@ class College(BaseController):
 
     def get_list_object_page(self, request: HttpRequest):
         params = [
-            {"pCollegeName  ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
-            {"pCode": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
-            {"pUniversityID   ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
-            {"pStateID": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
-            {"pCityID ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
-            {"pPageNum": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
-            {"pPageSize": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
-         
-
+            {"CollegeName  ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
+            {"Code": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"UniversityID   ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"StateID": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"CityID ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"page_num": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=1)},
+            {"page_size": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=10)},
         ]
         params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
         college_service: CollegeService = CollegeService()
