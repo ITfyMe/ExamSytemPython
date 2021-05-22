@@ -96,7 +96,7 @@ class Subject(BaseController):
             {"SubjectName": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default='')},
             {"Code": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default='')},
             {"PageNum": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=1)},
-            {"PageSize": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=10)},
+            {"PageSize": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=25)},
         ]
         params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
         subject_service: SubjectService = SubjectService()
