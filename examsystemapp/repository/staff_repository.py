@@ -19,12 +19,12 @@ class StaffRepo(BaseRepository):
 
     def pre_add(self, object: StaffModel):
         self.sp_name = "sStaffAdd"
-        list_params = [object.staffid,object.ownerid,object.role,object.name,object.staffnum,object.addr1,object.addr2,object.cityid,object.stateid,object.pin,object.phonenum,object.email,object.profilepic,object.loginid,object.password]
+        list_params = [object.ownerid,object.role,object.name,object.staffnum,object.addr1,object.addr2,object.cityid,object.stateid,object.pin,object.phonenum,object.email,object.profilepic,object.loginid,object.password]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
         staff_model: StaffModel = object
-        staff_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        staff_model.staffid= int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return staff_model
 
@@ -35,18 +35,18 @@ class StaffRepo(BaseRepository):
 
     def post_update(self, object, returned_dict):
         staff_model: StaffModel = object
-        staff_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        #staff_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return staff_model
 
     def pre_delete(self, object: StaffModel):
         self.sp_name = "sStaffDelete"
-        list_params = [object.staffid,object.ownerid,object.role,object.name,object.staffnum,object.addr1,object.addr2,object.cityid,object.stateid,object.pin,object.phonenum,object.email,object.profilepic,object.loginid,object.password]
+        list_params = [object.staffid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
         staff_model: StaffModel = object
-        staff_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        staff_model.staffid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return staff_model
 
@@ -124,7 +124,7 @@ class StaffRepo(BaseRepository):
         return self.post_get_list(cursor_object)
 
     def pre_get_data_list_object_paginated(self, params):
-        self.sp_name = "sStaffObjectGetListPage"
+        self.sp_name = "sStaffGetListPage"
         self.params_list = params.get_params_list()
 
     def post_get_data_list_object_paginated(self, list_cursor_object):
