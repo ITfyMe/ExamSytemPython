@@ -19,12 +19,12 @@ class StudentRepo(BaseRepository):
 
     def pre_add(self, object: StudentModel):
         self.sp_name = "sStudentAdd"
-        list_params = [object.studentid,object.collegeid,object.branchid,object.currentsemester,object.name,object.rollno,object.add1,object.add2,object.add3,object.cityid,object.stateid,object.pin,object.phonenum,object.email,object.profilepic,object.loginid,object.passwd]
+        list_params = [object.collegeid,object.branchid,object.currentsemester,object.name,object.rollno,object.add1,object.add2,object.add3,object.cityid,object.stateid,object.pin,object.phonenum,object.email,object.profilepic,object.loginid,object.passwd]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
         student_model: StudentModel = object
-        student_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        student_model.studentid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return student_model
 
@@ -35,18 +35,18 @@ class StudentRepo(BaseRepository):
 
     def post_update(self, object, returned_dict):
         student_model: StudentModel = object
-        student_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        student_model.studentid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return student_model
 
     def pre_delete(self, object: StudentModel):
         self.sp_name = "sStudentDelete"
-        list_params = [object.studentid,object.collegeid,object.branchid,object.currentsemester,object.name,object.rollno,object.add1,object.add2,object.add3,object.cityid,object.stateid,object.pin,object.phonenum,object.email,object.profilepic,object.loginid,object.passwd]
+        list_params = [object.studentid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
         student_model: StudentModel = object
-        student_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        student_model.studentid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return student_model
 
@@ -128,7 +128,7 @@ class StudentRepo(BaseRepository):
         return self.post_get_list(cursor_object)
 
     def pre_get_data_list_object_paginated(self, params):
-        self.sp_name = "sStudentObjectGetListPage"
+        self.sp_name = "sStudentGetListPage"
         self.params_list = params.get_params_list()
 
     def post_get_data_list_object_paginated(self, list_cursor_object):

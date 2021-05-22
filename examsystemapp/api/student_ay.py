@@ -24,7 +24,7 @@ class StudentAY(BaseController):
         student_ay_json = json.loads(request.POST.get("student_ay_json"))
 
         student_ay_object: StudentAYModel = StudentAYModel()
-        student_ay_object.studentayid = student_ay_json.get("studentayid")
+
         student_ay_object.studentid = student_ay_json.get("studentid")
         student_ay_object.ayid = student_ay_json.get("ayid")
         student_ay_object.semesterid = student_ay_json.get("semesterid")
@@ -57,12 +57,7 @@ class StudentAY(BaseController):
 
         student_ay_object: StudentAYModel = StudentAYModel()
         student_ay_object.studentayid = student_ay_json.get("studentayid")
-        student_ay_object.studentid = student_ay_json.get("studentid")
-        student_ay_object.ayid = student_ay_json.get("ayid")
-        student_ay_object.semesterid = student_ay_json.get("semesterid")
-        student_ay_object.startdate = student_ay_json.get("startdate")
-        student_ay_object.enddate = student_ay_json.get("enddate")
-
+        
         student_ay_service: StudentAYService = StudentAYService()
         student_ay_object = student_ay_service.delete(student_ay_object)
 

@@ -19,12 +19,12 @@ class StudentAYRepo(BaseRepository):
 
     def pre_add(self, object: StudentAYModel):
         self.sp_name = "sStudentAYAdd"
-        list_params = [object.studentayid,object.studentid,object.ayid,object.semesterid,object.startdate,object.enddate]
+        list_params = [object.studentid,object.ayid,object.semesterid,object.startdate,object.enddate]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
         student_ay_model: StudentAYModel = object
-        student_ay_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        student_ay_model.studentayid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return student_ay_model
 
@@ -35,18 +35,18 @@ class StudentAYRepo(BaseRepository):
 
     def post_update(self, object, returned_dict):
         student_ay_model: StudentAYModel = object
-        student_ay_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        student_ay_model.studentayid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return student_ay_model
 
     def pre_delete(self, object: StudentAYModel):
         self.sp_name = "sStudentAYDelete"
-        list_params = [object.studentayid,object.studentid,object.ayid,object.semesterid,object.startdate,object.enddate]
+        list_params = [object.studentayid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
         student_ay_model: StudentAYModel = object
-        student_ay_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        student_ay_model.studentayid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return student_ay_model
 
@@ -106,7 +106,7 @@ class StudentAYRepo(BaseRepository):
         return self.post_get_list(cursor_object)
 
     def pre_get_data_list_object_paginated(self, params):
-        self.sp_name = "sStudentAYObjectGetListPage"
+        self.sp_name = "sStudentAYGetListPage"
         self.params_list = params.get_params_list()
 
     def post_get_data_list_object_paginated(self, list_cursor_object):
