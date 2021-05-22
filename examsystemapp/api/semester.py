@@ -24,6 +24,7 @@ class Semester(BaseController):
         semester_json = json.loads(request.POST.get("semester_json"))
 
         semester_object: SemesterModel = SemesterModel()
+
        # semester_object.semesterid = semester_json.get("semesterid")
         semester_object.name = semester_json.get("name")
         semester_object.code = semester_json.get("code")
