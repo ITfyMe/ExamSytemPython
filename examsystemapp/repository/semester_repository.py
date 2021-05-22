@@ -5,47 +5,47 @@ Reviewed By :
 Reviewed On :
 Version :
 """
-from examsystemapp.models.semester import semesterModel
+from examsystemapp.models.semester import SemesterModel
 from examsystemapp.repository.base_repository import BaseRepository
 from examsystemapp.utils.constants.constants import AppConstants
 from examsystemapp.utils.helpers.general_helper import IntHelper, StringHelper, FloatHelper
 from examsystemapp.utils.helpers.request_helper import ParamsObject
 
 
-class semesterRepo(BaseRepository):
+class SemesterRepo(BaseRepository):
 
     def _init_(self, ext_params={}):
         BaseRepository._init_(self, ext_params)
 
-    def pre_add(self, object: semesterModel):
+    def pre_add(self, object: SemesterModel):
         self.sp_name = "ssemesterAdd"
         list_params = [object.name,object.code]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
-        semester_model: semesterModel = object
+        semester_model: SemesterModel = object
         semester_model.semesterid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return semester_model
 
-    def pre_update(self, object: semesterModel):
+    def pre_update(self, object: SemesterModel):
         self.sp_name = "ssemesterUpdate"
         list_params = [object.semesterid,object.name,object.code]
         self.params_list = list_params
 
     def post_update(self, object, returned_dict):
-        semester_model: semesterModel = object
+        semester_model: SemesterModel = object
         #semester_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return semester_model
 
-    def pre_delete(self, object: semesterModel):
+    def pre_delete(self, object: SemesterModel):
         self.sp_name = "ssemesterDelete"
         list_params = [object.semesterid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
-        semester_model: semesterModel = object
+        semester_model: SemesterModel = object
         semester_model.semesterid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return semester_model
@@ -56,7 +56,7 @@ class semesterRepo(BaseRepository):
 
     def post_get(self, cursor_object):
         if len(cursor_object.get_data()) > 0:
-            semester_model: semesterModel = semesterModel()
+            semester_model: SemesterModel = SemesterModel()
             for each_tuple in cursor_object.get_data():
                 semester_model.semesterid = each_tuple[0]
                 semester_model.name = each_tuple[1]
@@ -74,7 +74,7 @@ class semesterRepo(BaseRepository):
         list_data = []
         if len(cursor_object.get_data()) > 0:
             for each_tuple in cursor_object.get_data():
-                semester_model: semesterModel = semesterModel()
+                semester_model: SemesterModel = SemesterModel()
                 semester_model.semesterid = each_tuple[0]
                 semester_model.name = each_tuple[1]
                 semester_model.code = each_tuple[2]
