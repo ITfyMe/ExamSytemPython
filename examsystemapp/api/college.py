@@ -24,7 +24,7 @@ class College(BaseController):
         college_json = json.loads(request.POST.get("college_json"))
 
         college_object: CollegeModel = CollegeModel()
-        college_object.collegeid = college_json.get("collegeid")
+       # college_object.collegeid = college_json.get("collegeid")
         college_object.universityid = college_json.get("universityid")
         college_object.name = college_json.get("name")
         college_object.code = college_json.get("code")
@@ -125,7 +125,16 @@ class College(BaseController):
         return self.send_response(data)
 
     def get_list_object_page(self, request: HttpRequest):
-        params = []
+        params = [
+            {"collegeName": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
+            {"code": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
+            {"universityID": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"stateID": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"cityID": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"page_num": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=1)},
+            {"page_size": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=10)}
+
+        ]
         params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
         college_service: CollegeService = CollegeService()
         data = college_service.get_list_object_paginated(params)
