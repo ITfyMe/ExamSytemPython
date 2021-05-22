@@ -19,7 +19,7 @@ class SubjectRepo(BaseRepository):
 
     def pre_add(self, object: SubjectModel):
         self.sp_name = "sSubjectAdd"
-        list_params = [object.subjectid,object.name,object.code]
+        list_params = [object.name,object.code]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
@@ -41,12 +41,12 @@ class SubjectRepo(BaseRepository):
 
     def pre_delete(self, object: SubjectModel):
         self.sp_name = "sSubjectDelete"
-        list_params = [object.subjectid,object.name,object.code]
+        list_params = [object.subjectid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
         subject_model: SubjectModel = object
-        subject_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        # subject_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return subject_model
 
@@ -100,7 +100,7 @@ class SubjectRepo(BaseRepository):
         return self.post_get_list(cursor_object)
 
     def pre_get_data_list_object_paginated(self, params):
-        self.sp_name = "sSubjectObjectGetListPage"
+        self.sp_name = "sSubjectGetListPage"
         self.params_list = params.get_params_list()
 
     def post_get_data_list_object_paginated(self, list_cursor_object):
