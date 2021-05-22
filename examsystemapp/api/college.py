@@ -117,11 +117,11 @@ class College(BaseController):
         params = [
             {"pCollegeName  ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
             {"pCode": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
-            {"pUniversityID   ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
-            {"pStateID": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
-            {"pCityID ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
-            {"pPageNum": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
-            {"pPageSize": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default=None)},
+            {"pUniversityID   ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"pStateID": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"pCityID ": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"pPageNum": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
+            {"pPageSize": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.INT, default=None)},
          
 
         ]
