@@ -19,12 +19,12 @@ class CollegeRepo(BaseRepository):
 
     def pre_add(self, object: CollegeModel):
         self.sp_name = "sCollegeAdd"
-        list_params = [object.collegeid,object.universityid,object.name,object.code,object.addr1,object.addr2,object.addr3,object.cityid,object.stateid,object.pincode,object.phone,object.email,object.logo,object.url]
+        list_params = [object.universityid,object.name,object.code,object.addr1,object.addr2,object.addr3,object.cityid,object.stateid,object.pincode,object.phone,object.email,object.logo,object.url]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
         college_model: CollegeModel = object
-        college_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        college_model.collegeid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return college_model
 
@@ -41,7 +41,7 @@ class CollegeRepo(BaseRepository):
 
     def pre_delete(self, object: CollegeModel):
         self.sp_name = "sCollegeDelete"
-        list_params = [object.collegeid,object.universityid,object.name,object.code,object.addr1,object.addr2,object.addr3,object.cityid,object.stateid,object.pincode,object.phone,object.email,object.logo,object.url]
+        list_params = [object.collegeid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
@@ -122,7 +122,7 @@ class CollegeRepo(BaseRepository):
         return self.post_get_list(cursor_object)
 
     def pre_get_data_list_object_paginated(self, params):
-        self.sp_name = "sCollegeObjectGetListPage"
+        self.sp_name = "sCollegeGetListPage"
         self.params_list = params.get_params_list()
 
     def post_get_data_list_object_paginated(self, list_cursor_object):

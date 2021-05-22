@@ -24,7 +24,7 @@ class Subject(BaseController):
         subject_json = json.loads(request.POST.get("subject_json"))
 
         subject_object: SubjectModel = SubjectModel()
-        subject_object.subjectid = subject_json.get("subjectid")
+        # subject_object.subjectid = subject_json.get("subjectid")
         subject_object.name = subject_json.get("name")
         subject_object.code = subject_json.get("code")
 
@@ -51,8 +51,8 @@ class Subject(BaseController):
 
         subject_object: SubjectModel = SubjectModel()
         subject_object.subjectid = subject_json.get("subjectid")
-        subject_object.name = subject_json.get("name")
-        subject_object.code = subject_json.get("code")
+        # subject_object.name = subject_json.get("name")
+        # subject_object.code = subject_json.get("code")
 
         subject_service: SubjectService = SubjectService()
         subject_object = subject_service.delete(subject_object)
@@ -92,7 +92,12 @@ class Subject(BaseController):
         return self.send_response(data)
 
     def get_list_object_page(self, request: HttpRequest):
-        params = []
+        params = [
+            {"SubjectName": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default='')},
+            {"Code": RequestConfig(from_session=False, nullable=True, datatype=DataTypes.STRING, default='')},
+            {"PageNum": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=1)},
+            {"PageSize": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=25)},
+        ]
         params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
         subject_service: SubjectService = SubjectService()
         data = subject_service.get_list_object_paginated(params)

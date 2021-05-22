@@ -19,7 +19,7 @@ class BranchRepo(BaseRepository):
 
     def pre_add(self, object: BranchModel):
         self.sp_name = "sBranchAdd"
-        list_params = [object.name,object.code]
+        list_params = [object.name, object.code]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
@@ -30,12 +30,12 @@ class BranchRepo(BaseRepository):
 
     def pre_update(self, object: BranchModel):
         self.sp_name = "sBranchUpdate"
-        list_params = [object.branchid,object.name,object.code]
+        list_params = [object.branchid, object.name, object.code]
         self.params_list = list_params
 
     def post_update(self, object, returned_dict):
         branch_model: BranchModel = object
-        #branch_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
+        # branch_model.id = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
 
         return branch_model
 
