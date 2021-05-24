@@ -14,6 +14,8 @@ from examsystemapp.utils.constants.constants import DataTypes, HttpMethodType, A
 from examsystemapp.utils.helpers.general_helper import IntHelper, FloatHelper
 from examsystemapp.utils.helpers.request_helper import RequestConfig, ParamsObject
 
+import time
+
 
 class College(BaseController):
 
@@ -125,5 +127,8 @@ class College(BaseController):
         ]
         params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
         college_service: CollegeService = CollegeService()
+
+        time.sleep(5)
+
         data = college_service.get_list_object_paginated(params)
         return self.send_response(data)
