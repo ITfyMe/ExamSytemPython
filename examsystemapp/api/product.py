@@ -120,3 +120,14 @@ class Product(BaseController):
         product_service: ProductService = ProductService()
         data = product_service.get_products_by_subcategory(params)
         return self.send_response(data)
+
+    def get_products_by_search(self, request: HttpRequest):
+        params = [
+            {"search": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.STRING, default='')},
+            {"page_num": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=1)},
+            {"page_size": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=15)}
+        ]
+        params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
+        product_service: ProductService = ProductService()
+        data = product_service.get_products_by_search(params)
+        return self.send_response(data)
