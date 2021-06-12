@@ -16,5 +16,6 @@ urlpatterns = [
     path('university-ay/', include('examsystemapp.urls.university_ay')),
     path('subject/', include('examsystemapp.urls.subject')),
     path('menu/', include('examsystemapp.urls.category')),
+    path('product/', include('examsystemapp.urls.product')),
 
 ]
