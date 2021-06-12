@@ -100,3 +100,14 @@ def get_products_by_subcategory(request):
         return base_url_mapping.send_response(None, ex.error_message, 500, ex.error_code)
     except Exception as ex:
         return base_url_mapping.send_response(None, str(ex), 500, "ERROR001")
+
+
+def get_products_by_search(request):
+    try:
+        return Product(request).get_products_by_search(request)
+    except PermissionDeniedException as ex:
+        return base_url_mapping.send_response(None, ex.error_message, 401, ex.error_code)
+    except KaroException as ex:
+        return base_url_mapping.send_response(None, ex.error_message, 500, ex.error_code)
+    except Exception as ex:
+        return base_url_mapping.send_response(None, str(ex), 500, "ERROR001")
