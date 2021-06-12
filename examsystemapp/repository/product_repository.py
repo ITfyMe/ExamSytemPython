@@ -123,3 +123,7 @@ class ProductRepo(BaseRepository):
 
     def get_products_by_subcategory(self, params: ParamsObject):
         return self.get_direct_multiple("sGetProductBySubCategory", params.get_params_list())
+
+    
+    def get_products_by_search(self, params: ParamsObject):
+        return self.get_direct_multiple("sGetProductBySearch", params.get_params_list())
