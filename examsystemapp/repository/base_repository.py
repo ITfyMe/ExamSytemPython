@@ -411,3 +411,34 @@ class BaseRepository:
         result_dict["pages"] = self.build_dict_for_cursor(pagination_cursor_object)
         result_dict["data"] = model_object
         return result_dict
+
+    def call_direct_with_transaction(self, sp_name, params, db_type='W'):
+        """
+        :description: This function facilitates to call the sp directly  (For add/update/delete)
+                      Function requires sp_name as string and params as list
+                      It does not provide the transaction and it does not closes the cursor
+                      Returns the data object to the data layer
+        :param sp_name: Procedure name to call
+        :param params: list of parameters to call the sp
+        :param db_type: Type of database (Read or write)
+        :return: List of dictionary (Whatever comes from the database directly)
+        """
+        if base.DEBUG_ENABLED:
+            LoggingHelper().log_debug(self.__class__, sp_name, params)
+        try:
+            # transaction.set_autocommit(autocommit=False)
+            self.get_cursor(db_type).callproc(sp_name, params)
+            self.data_as_dict_transactional()
+            # transaction.commit()
+        except Exception as ex:
+            if base.DEBUG_ENABLED:
+                LoggingHelper().log_error(self.__class__, "", str(ex))
+            if isinstance(ex, DatabaseException) or isinstance(ex, KaroException):
+                raise DatabaseException(self.db_error_code, ex.error_message, ex.error_object)
+            else:
+                raise DatabaseException(self.db_error_code, str(ex), self.data)
+        finally:
+            self.close_cursor()
+        if base.DEBUG_ENABLED:
+            LoggingHelper().log_debug(self.__class__, "", self.data)
+        return self.data
