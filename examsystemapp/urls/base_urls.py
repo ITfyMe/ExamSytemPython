@@ -18,5 +18,6 @@ urlpatterns = [
     path('menu/', include('examsystemapp.urls.category')),
     path('product/', include('examsystemapp.urls.product')),
     path('cart/', include('examsystemapp.urls.cart')),
+    path('order/', include('examsystemapp.urls.order')),
 
 ]
