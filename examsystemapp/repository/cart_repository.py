@@ -49,7 +49,7 @@ class CartRepo(BaseRepository):
 
     def pre_delete(self, object: CartModel):
         self.sp_name = "sCartDelete"
-        list_params = [object.cartid]
+        list_params = [object.customerid]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):

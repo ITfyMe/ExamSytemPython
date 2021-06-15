@@ -31,6 +31,14 @@ class OrderRepo(BaseRepository):
             order_item_repo: OrderItemRepo = OrderItemRepo()
             items.orderid = order_model.orderid
             order_item_repo.add_data(items)
+
+        # Delete the cart
+        # Create CartModel()
+        # Add customer_id into the model
+        # Call CartRepo().delete_data(cart_model)
+
+
+
         return order_model
 
     def pre_update(self, object: OrderModel):
