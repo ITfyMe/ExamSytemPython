@@ -140,7 +140,7 @@ class Cart(BaseController):
         qty = cart_json.get("qty")
 
         cart_service: CartService = CartService()
-        cart_object = cart_service.delete_item(cartitemid, qty)
+        cart_object = cart_service.update_item(cartitemid, qty)
 
         return self.send_response(cart_object)
 
