@@ -52,13 +52,8 @@ class Order(BaseController):
 
         order_object: OrderModel = OrderModel()
         order_object.orderid = order_json.get("orderid")
-        order_object.customerid = order_json.get("customerid")
-        order_object.orderdate = order_json.get("orderdate")
         order_object.status = order_json.get("status")
-        order_object.addressid = order_json.get("addressid")
-        order_object.paymenttype = order_json.get("paymenttype")
         order_object.paymentstatus = order_json.get("paymentstatus")
-        order_object.totalprice = order_json.get("totalprice")
 
         order_service: OrderService = OrderService()
         order_object = order_service.update(order_object)

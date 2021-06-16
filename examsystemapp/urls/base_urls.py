@@ -19,5 +19,7 @@ urlpatterns = [
     path('product/', include('examsystemapp.urls.product')),
     path('cart/', include('examsystemapp.urls.cart')),
     path('order/', include('examsystemapp.urls.order')),
+    path('customer/', include('examsystemapp.urls.customer')),
+    path('customer_address/', include('examsystemapp.urls.customer_address')),
 
 ]

@@ -111,6 +111,13 @@ class Cart(BaseController):
     def delete_item(self, request: HttpRequest):
         cart_json = json.loads(request.POST.get("cart_json"))
 
+        """
+        {
+            "cartid": 1,
+            "productid": 1
+        }
+        """
+
         cartid = cart_json.get("cartid")
         productid = cart_json.get("productid")
 

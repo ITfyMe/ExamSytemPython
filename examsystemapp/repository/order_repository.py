@@ -5,8 +5,10 @@ Reviewed By :
 Reviewed On :
 Version :
 """
+from examsystemapp.models.cart import CartModel
 from examsystemapp.models.order import OrderModel
 from examsystemapp.repository.base_repository import BaseRepository
+from examsystemapp.repository.cart_repository import CartRepo
 from examsystemapp.repository.order_item_repository import OrderItemRepo
 from examsystemapp.utils.constants.constants import AppConstants
 from examsystemapp.utils.helpers.general_helper import IntHelper, StringHelper, FloatHelper
@@ -20,13 +22,13 @@ class OrderRepo(BaseRepository):
 
     def pre_add(self, object: OrderModel):
         self.sp_name = "sOrderAdd"
-        list_params = [object.customerid,object.addressid,object.paymenttype,object.paymentstatus,object.totalprice]
+        list_params = [object.customerid, object.addressid, object.paymenttype, object.paymentstatus, object.totalprice]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
         order_model: OrderModel = object
         order_model.orderid = int(returned_dict.get(AppConstants.DB_TRANSACTION_ID_KEY))
-        
+
         for items in order_model.items:
             order_item_repo: OrderItemRepo = OrderItemRepo()
             items.orderid = order_model.orderid
@@ -37,13 +39,16 @@ class OrderRepo(BaseRepository):
         # Add customer_id into the model
         # Call CartRepo().delete_data(cart_model)
 
+        cart_model: CartModel = CartModel()
+        cart_model.customerid = order_model.customerid
+        CartRepo().delete_data(cart_model)
 
 
         return order_model
 
     def pre_update(self, object: OrderModel):
         self.sp_name = "sOrderUpdate"
-        list_params = [object.orderid,object.customerid,object.orderdate,object.status,object.addressid,object.paymenttype,object.paymentstatus,object.totalprice]
+        list_params = [object.orderid, object.status, object.paymentstatus]
         self.params_list = list_params
 
     def post_update(self, object, returned_dict):
@@ -54,7 +59,8 @@ class OrderRepo(BaseRepository):
 
     def pre_delete(self, object: OrderModel):
         self.sp_name = "sOrderDelete"
-        list_params = [object.orderid,object.customerid,object.orderdate,object.status,object.addressid,object.paymenttype,object.paymentstatus,object.totalprice]
+        list_params = [object.orderid, object.customerid, object.orderdate, object.status, object.addressid,
+                       object.paymenttype, object.paymentstatus, object.totalprice]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
@@ -101,7 +107,7 @@ class OrderRepo(BaseRepository):
                 order_model.paymenttype = each_tuple[5]
                 order_model.paymentstatus = each_tuple[6]
                 order_model.totalprice = each_tuple[7]
-                
+
                 params: ParamsObject = ParamsObject()
                 params.set_params_list([order_model.orderid])
                 order_model.items = OrderItemRepo().get_data_list(params)
