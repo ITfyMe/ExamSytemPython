@@ -125,3 +125,22 @@ class Cart(BaseController):
         cart_object = cart_service.delete_item(cartid, productid)
 
         return self.send_response(cart_object)
+    
+    def update_item(self, request: HttpRequest):
+        cart_json = json.loads(request.POST.get("cart_json"))
+
+        """
+        {
+            "cartitemid": 1,
+            "qty": 1
+        }
+        """
+
+        cartitemid = cart_json.get("cartitem_id")
+        qty = cart_json.get("qty")
+
+        cart_service: CartService = CartService()
+        cart_object = cart_service.delete_item(cartitemid, qty)
+
+        return self.send_response(cart_object)
+

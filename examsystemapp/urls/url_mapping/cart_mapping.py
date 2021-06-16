@@ -100,3 +100,13 @@ def delete_item(request):
         return base_url_mapping.send_response(None, ex.error_message, 500, ex.error_code)
     except Exception as ex:
         return base_url_mapping.send_response(None, str(ex), 500, "ERROR001")
+
+def update_item(request):
+    try:
+        return Cart(request).update_item(request)
+    except PermissionDeniedException as ex:
+        return base_url_mapping.send_response(None, ex.error_message, 401, ex.error_code)
+    except KaroException as ex:
+        return base_url_mapping.send_response(None, ex.error_message, 500, ex.error_code)
+    except Exception as ex:
+        return base_url_mapping.send_response(None, str(ex), 500, "ERROR001")

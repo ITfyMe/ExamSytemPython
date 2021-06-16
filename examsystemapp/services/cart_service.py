@@ -110,3 +110,8 @@ class CartService(BaseService):
         params: ParamsObject = ParamsObject()
         params.set_params_list([cart_id, product_id])
         return self.delete_direct_transactional("sCartItemDeleteByProduct", params)
+    
+    def upadte_item(self, cartitem_id, qty):
+        params: ParamsObject = ParamsObject()
+        params.set_params_list([cartitem_id, qty])
+        return self.update_direct_transactional("sCartItemUpdate", params)

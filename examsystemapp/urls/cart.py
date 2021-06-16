@@ -19,4 +19,5 @@ urlpatterns = [
     path("get-list-object", cart_mapping.get_list_object),
     path("get-list-object-page", cart_mapping.get_list_object_page),
     path("delete-item", cart_mapping.delete_item),
+    path("update-item", cart_mapping.update_item),
 ]
