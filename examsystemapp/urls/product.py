@@ -20,4 +20,5 @@ urlpatterns = [
     path("get-list-object-page", product_mapping.get_list_object_page),
     path("product-by-sub-cat", product_mapping.get_products_by_subcategory),
     path("product-by-search", product_mapping.get_products_by_search),
+    path("get-similar-product", product_mapping.get_similar_product),
 ]

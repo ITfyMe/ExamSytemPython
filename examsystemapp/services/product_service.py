@@ -115,4 +115,8 @@ class ProductService(BaseService):
         product_repo: ProductRepo = ProductRepo()
         return product_repo.get_products_by_search(params)
 
+    def get_similar_product(self, params):
+        product_repo: ProductRepo = ProductRepo()
+        return product_repo.get_similar_product(params)
+
 
