@@ -131,3 +131,15 @@ class Product(BaseController):
         product_service: ProductService = ProductService()
         data = product_service.get_products_by_search(params)
         return self.send_response(data)
+
+    def get_similar_product(self, request: HttpRequest):
+        params = [
+            {"subcategoryid": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=1)},
+            {"productid": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=1)},
+            {"page_num": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=1)},
+            {"page_size": RequestConfig(from_session=False, nullable=False, datatype=DataTypes.INT, default=15)}
+        ]
+        params: ParamsObject = self.convert_params(request, HttpMethodType.get, params)
+        product_service: ProductService = ProductService()
+        data = product_service.get_similar_product(params)
+        return self.send_response(data)
