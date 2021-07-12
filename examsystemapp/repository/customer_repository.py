@@ -7,6 +7,8 @@ Version :
 """
 from examsystemapp.models.customer import CustomerModel
 from examsystemapp.repository.base_repository import BaseRepository
+from examsystemapp.repository.cart_repository import CartRepo
+from examsystemapp.repository.customer_address_repository import CustomerAddressRepo
 from examsystemapp.utils.constants.constants import AppConstants
 from examsystemapp.utils.helpers.general_helper import IntHelper, StringHelper, FloatHelper
 from examsystemapp.utils.helpers.request_helper import ParamsObject
@@ -19,7 +21,7 @@ class CustomerRepo(BaseRepository):
 
     def pre_add(self, object: CustomerModel):
         self.sp_name = "sCustomerAdd"
-        list_params = [object.customerid,object.email,object.phone,object.name,object.password]
+        list_params = [object.customerid, object.email, object.phone, object.name, object.password]
         self.params_list = list_params
 
     def post_add(self, object, returned_dict):
@@ -30,7 +32,7 @@ class CustomerRepo(BaseRepository):
 
     def pre_update(self, object: CustomerModel):
         self.sp_name = "sCustomerUpdate"
-        list_params = [object.customerid,object.email,object.phone,object.name,object.password]
+        list_params = [object.customerid, object.email, object.phone, object.name, object.password]
         self.params_list = list_params
 
     def post_update(self, object, returned_dict):
@@ -41,7 +43,7 @@ class CustomerRepo(BaseRepository):
 
     def pre_delete(self, object: CustomerModel):
         self.sp_name = "sCustomerDelete"
-        list_params = [object.customerid,object.email,object.phone,object.name,object.password]
+        list_params = [object.customerid, object.email, object.phone, object.name, object.password]
         self.params_list = list_params
 
     def post_delete(self, object, returned_dict):
@@ -116,6 +118,33 @@ class CustomerRepo(BaseRepository):
 
     def customer_authentication(self, params: ParamsObject):
         # return params.get_params_list()
-        return self.get_direct("sCustomerAuthenticate", params.get_params_list())
+        # return self.get_direct("sCustomerAuthenticate", params.get_params_list())
+        customer = self.get_direct("sCustomerAuthenticate", params.get_params_list())
 
-            
+        if customer is None:
+            return None
+
+        if len(customer) <= 0:
+            return None
+
+        customer = customer[0]
+
+        # # # Call Cutomer Address Repo
+        customer_address_repo: CustomerAddressRepo = CustomerAddressRepo()
+        params: ParamsObject = ParamsObject()
+        params.set_params_list([customer.get('CustomerID')])
+        address = customer_address_repo.get_list_customer_adderss_by_id(params)
+        # print(address)
+
+        # Call Cart Repo
+
+        cart_params: ParamsObject = ParamsObject()
+        cart_params.set_params_list([params.get_params_dict().get("sessionid"), customer.get('CustomerID')])
+
+        cart_repo: CartRepo = CartRepo()
+        cart = cart_repo.get_data_object(cart_params)
+
+        customer['address'] = address
+        customer['cart'] = cart
+
+        return customer
