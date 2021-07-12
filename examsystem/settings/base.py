@@ -53,8 +53,8 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ORIGIN_WHITELIST = (
-    "http://localhost:4200/",
     "http://studentshop.itfyme.com",
+    "http://localhost:4200/",
     "http://devweb.sustainablecontext.com",
     "https://client.sustainablecontext.com",
     "http://reports.sustainablecontext.com",
