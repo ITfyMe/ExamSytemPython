@@ -52,6 +52,11 @@ CORS_ALLOW_METHODS = [
     'PUT',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://studentshop.itfyme.com",
+    "http://localhost:4200/"
+]
+
 CORS_ORIGIN_WHITELIST = (
     "http://studentshop.itfyme.com",
     "http://localhost:4200/",
